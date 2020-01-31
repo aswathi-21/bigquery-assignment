@@ -1,0 +1,113 @@
+1.	What is the fdic certificate number of top holder institutions with net income less than zero in ascending order?
+SELECT fdic_certificate_number,net_income,primary_specialization,top_holder FROM `bigquery-public-data.fdic_banks.institutions` where net_income <0 order by net_income asc LIMIT 10;
+fdic_certificate_number	net_income	primary_specialization	top_holder
+58912	-4585493	Mortgage Lending Specialization	
+32633	-4272651	Mortgage Lending Specialization	
+32618	-1982980	Commercial Lending Specialization	
+3165	-1590646	Commercial Lending Specialization	FIRST REPUBLICBANK CORPORATION
+30773	-1429525	Commercial Lending Specialization	
+30685	-1249896	Commercial Lending Specialization	
+31062	-1200470	Commercial Lending Specialization	
+30321	-1105205	Consumer Lending Specialization	
+32469	-1085667	Commercial Lending Specialization	UCBH HOLDINGS, INC.
+22826	-957702	Commercial Lending Specialization	MITSUBISHI UFJ FINANCIAL GROUP, INC.
+
+2.	Which are the cities having a count of fdi certificate number reater than 5?
+SELECT count(fdic_certificate_number),city FROM `bigquery-public-data.fdic_banks.institutions` group by city having count(fdic_certificate_number) >5 limit 10
+f0_	city
+46	Louisville
+6	Eufaula
+56	Greenville
+8	Anniston
+24	Oxford
+85	Jacksonville
+35	Lafayette
+10	Butler
+43	Birmingham
+65	Jackson
+
+3.	What is the fdi certificate number and city of 15 institutions with total domestic deposits within the range of 32000-92000 of 15?
+ SELECT fdic_certificate_number ,total_domestic_deposits,city from `bigquery-public-data.fdic_banks.institutions` where total_domestic_deposits between 32000 and 92000 limit 15
+fdic_certificate_number	total_domestic_deposits	city
+2772	56033	Prattville
+18006	44883	Prattville
+19023	51051	Gulf Shores
+12069	44633	Foley
+16742	32108	Eufaula
+851	86471	Eufaula
+1734	70024	Oneonta
+32968	41622	Union Springs
+26292	39935	Jacksonville
+14837	39643	Jacksonville
+21028	54377	Oxford
+27365	78068	Oxford
+18770	41927	Valley
+58842	70787	Centre
+9059	62243	Centre
+
+4. List out the established dates of institutions with commercial lending specialization and net income greater than zero.
+SELECT net_income,primary_specialization,institution_name,established_date FROM `bigquery-public-data.fdic_banks.institutions` where primary_specialization = 'Commercial Lending Specialization' and net_income >0 limit 12
+net_income	primary_specialization	institution_name	established_date
+9717	Commercial Lending Specialization	River Bank & Trust	2006-04-03
+518	Commercial Lending Specialization	Citizens' Bank, Inc.	1981-09-08
+1970	Commercial Lending Specialization	Vision Bank	2000-03-29
+3417	Commercial Lending Specialization	First Gulf Bank	1988-01-04
+2542	Commercial Lending Specialization	SouthTrust Bank of Baldwin County	1932-10-25
+715	Commercial Lending Specialization	BankTrust of Alabama	1926-01-01
+2609	Commercial Lending Specialization	Community Bank	1923-07-23
+2982	Commercial Lending Specialization	Southern States Bank	2007-08-27
+2246	Commercial Lending Specialization	Cheaha Bank	2000-08-23
+1706	Commercial Lending Specialization	Farmers and Merchants Bank	1915-04-12
+331	Commercial Lending Specialization	Generations Bank	2008-10-06
+1202	Commercial Lending Specialization	First Bank and Trust	1910-01-01
+
+5. What is the asset concentration hierarchy and city of 50 companies  with zip code 36067 with no null?
+SELECT zip_code,city,asset_concentration_hierarchy FROM `bigquery-public-data.fdic_banks.institutions` where zip_code = '36067' and asset_concentration_hierarchy is not null limit 50;
+zip_code	city	asset_concentration_hierarchy
+36067	Prattville	4
+36067	Prattville	8
+36067	Prattville	7
+
+6.Which distinct city belongs to a each zipcode of 15 institutions?
+ SELECT distinct city,zip_code  FROM `bigquery-public-data.fdic_banks.institutions` limit 15;
+city	zip_code
+Prattville	36066
+Prattville	36067
+Foley	36535
+Bay Minette	36507
+Gulf Shores	36542
+Robertsdale	36567
+Gulf Shores	36547
+Louisville	36048
+Eufaula	36027
+Centreville	35042
+Oneonta	35121
+Blountsville	35031
+Union Springs	36089
+Greenville	36037
+Anniston	36202
+
+7.What is the established date in ascending order of institutions in London?
+ SELECT branch_city ,institution_name ,date_established FROM `bigquery-public-data.fdic_banks.locations` where branch_city ='London' order by date_established asc LIMIT 20
+branch_city	institution_name	date_established
+London	PNC Bank, National Association	1865-01-01
+London	Community Trust Bank, Inc.	1884-05-11
+London	JPMorgan Chase Bank, National Association	1897-01-01
+London	First National Bank and Trust	1903-04-03
+London	JPMorgan Chase Bank, National Association	1915-03-01
+London	Deutsche Bank Trust Company Americas	1924-09-21
+London	Bank of America, National Association	1931-02-02
+London	Truist Bank	1934-09-01
+London	JPMorgan Chase Bank, National Association	1938-03-01
+London	JPMorgan Chase Bank, National Association	1954-03-05
+London	Cumberland Valley National Bank & Trust Company	1959-02-06
+London	JPMorgan Chase Bank, National Association	1960-01-04
+London	Bank of America, National Association	1964-06-25
+London	HSBC Bank USA, National Association	1964-09-01
+London	Bank of America, National Association	1964-10-19
+London	JPMorgan Chase Bank, National Association	1965-01-18
+London	The Bank of New York Mellon	1965-07-01
+London	The Bank of New York Mellon	1967-10-30
+London	BNY Mellon, National Association	1967-12-26
+London	JPMorgan Chase Bank, National Association	1968-11-25
+
